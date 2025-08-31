@@ -160,10 +160,6 @@ class PermissionResource extends Resource
 
                         return $query;
                     }),
-                SelectFilter::make('guard_name')
-                    ->label(__('filament-spatie-roles-permissions::filament-spatie.field.guard_name'))
-                    ->multiple()
-                    ->options(config('filament-spatie-roles-permissions.guard_names')),
             ])->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\ViewAction::make(),
@@ -173,7 +169,7 @@ class PermissionResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
                 BulkAction::make('Attach to roles')
-                    ->label(__('filament-spatie-roles-permissions::filament-spatie.action.attach_to_roles'))
+                    ->label(__('Tambahkan'))
                     ->action(function (Collection $records, array $data): void {
                         Role::whereIn('id', $data['roles'])->each(function (Role $role) use ($records): void {
                             $records->each(fn(Permission $permission) => $role->givePermissionTo($permission));

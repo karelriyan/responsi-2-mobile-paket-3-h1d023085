@@ -12,6 +12,7 @@ use Filament\Facades\Filament;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -78,7 +79,7 @@ class RoleResource extends Resource
             ->schema([
                 Section::make()
                     ->schema([
-                        Grid::make(2)
+                        Grid::make(1)
                             ->schema([
                                 TextInput::make('name')
                                     ->label(__('filament-spatie-roles-permissions::filament-spatie.field.name'))
@@ -90,27 +91,23 @@ class RoleResource extends Resource
                                             $rule->where(config('permission.column_names.team_foreign_key', 'team_id'), Filament::getTenant()->id);
                                         }
                                         return $rule;
-                                    }),
+                                    })->columns(1),
 
-                                Select::make('guard_name')
-                                    ->label(__('filament-spatie-roles-permissions::filament-spatie.field.guard_name'))
-                                    ->options(config('filament-spatie-roles-permissions.guard_names'))
-                                    ->default(config('filament-spatie-roles-permissions.default_guard_name'))
-                                    ->visible(fn() => config('filament-spatie-roles-permissions.should_show_guard', true))
-                                    ->required(),
+                                Hidden::make('guard_name')
+                                    ->default('web'),
 
-                                Select::make('permissions')
-                                    ->columnSpanFull()
-                                    ->multiple()
-                                    ->label(__('filament-spatie-roles-permissions::filament-spatie.field.permissions'))
-                                    ->relationship(
-                                        name: 'permissions',
-                                        modifyQueryUsing: fn(Builder $query) => $query->orderBy('name'),
-                                    )
-                                    ->visible(config('filament-spatie-roles-permissions.should_show_permissions_for_roles'))
-                                    ->getOptionLabelFromRecordUsing(fn(Model $record) => "{$record->name} ({$record->guard_name})")
-                                    ->searchable(['name', 'guard_name']) // searchable on both name and guard_name
-                                    ->preload(config('filament-spatie-roles-permissions.preload_permissions')),
+                                // Select::make('permissions')
+                                //     ->columnSpanFull()
+                                //     ->multiple()
+                                //     ->label(__('filament-spatie-roles-permissions::filament-spatie.field.permissions'))
+                                //     ->relationship(
+                                //         name: 'permissions',
+                                //         modifyQueryUsing: fn(Builder $query) => $query->orderBy('name'),
+                                //     )
+                                //     ->visible(config('filament-spatie-roles-permissions.should_show_permissions_for_roles'))
+                                //     ->getOptionLabelFromRecordUsing(fn(Model $record) => "{$record->name} ({$record->guard_name})")
+                                //     ->searchable(['name', 'guard_name']) // searchable on both name and guard_name
+                                //     ->preload(config('filament-spatie-roles-permissions.preload_permissions')),
 
                                 Select::make(config('permission.column_names.team_foreign_key', 'team_id'))
                                     ->label(__('filament-spatie-roles-permissions::filament-spatie.field.team'))

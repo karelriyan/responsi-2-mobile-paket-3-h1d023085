@@ -7,7 +7,7 @@
 - Shift asal: E
 
 ## Video Demo
-![Video Demo](Video%20Demo.mp4)
+![Video Demo](supermarket_buku/Video%20Demo.mp4)
 
 ## Penjelasan Kode
 - `lib/main.dart`  

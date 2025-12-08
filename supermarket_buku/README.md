@@ -1,16 +1,38 @@
-# supermarket_buku
+# Responsi 2 Mobile Paket 3 H1D023085
 
-A new Flutter project.
+## Identitas
+- Nama: Karel Tsalasatir Riyan
+- NIM: H1D023085
+- Shift baru: F
+- Shift asal: E
 
-## Getting Started
+## Video Demo
+![Video Demo](Video%20Demo.mp4)
 
-This project is a starting point for a Flutter application.
+## Penjelasan Kode
+- `lib/main.dart`  
+  - Inisialisasi Supabase dan menjalankan `MyApp`.
+- `lib/app.dart`  
+  - `MyApp`: tema, routes, dan `AuthGate`.  
+  - `AuthGate`: pilih layar login atau home berdasar status auth.
+- `lib/pages/login_page.dart`  
+  - Form login/registrasi, `signInWithPassword` dan `signUp`, lalu navigasi ke `/home`.
+- `lib/pages/home_page.dart`  
+  - Stream `books`, list data, aksi edit/delete, tombol tambah, logout.
+  - `_refreshList`: memicu stream baru setelah perubahan data.
+- `lib/pages/book_form_page.dart`  
+  - Form tambah/edit semua field buku; submit insert/update; `Navigator.pop(context, true)` agar home bisa refresh.
 
-A few resources to get you started if this is your first Flutter project:
+## Spesifikasi API (Supabase)
+- Auth: email/password (built-in Supabase).
+- Database: tabel `books` seperti di bagian Konfigurasi; operasi insert/update/delete/read dilakukan langsung via Supabase client.
+- Tabel: `books` dengan kolom:
+  - `id` (int, PK, auto increment)
+  - `title` (text)
+  - `price` (int)
+  - `amount` (int)
+  - `entry_date` (text/tanggal)
+  - `volume` (int)
+  - `author` (text)
+  - `publisher` (text)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
